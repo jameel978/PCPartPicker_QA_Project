@@ -1,0 +1,22 @@
+Login
+	login with wrong pass
+	login with wrong username
+	login with correct info
+
+Registration
+	username
+		-invalid_username
+		-already_registred_username
+	email
+		-wrong_email
+		-not_matching_the_email
+		-already_registered_email
+	password
+		-not matching passwords
+		-invalid password
+	checkboxes
+		-not checking the tos
+		-not checking the ucoc
+
+
+	r
