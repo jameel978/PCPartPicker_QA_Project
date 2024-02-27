@@ -26,7 +26,9 @@ class Driver_instance:
         return WebDriverWait(self._driver, sec).until(EC.presence_of_all_elements_located((By.XPATH, xpath)))
 
     def Find_and_click_on_element(self,element):
-        self.wait_and_get_element_by_xpath(element).click()
+        self._driver.execute_script("arguments[0].click();", self.wait_and_get_element_by_xpath(element))
+        #self._driver.execute_script("arguments[0].scrollIntoView();", elem)
+        #WebDriverWait(self._driver, 20).until(EC.element_to_be_clickable((By.XPATH, element))).click()
 
     def Find_and_send_input_to_element(self,element,txt):
         self.wait_and_get_element_by_xpath(element).send_keys(txt)
@@ -37,5 +39,6 @@ class Driver_instance:
             return True
         except:
             return False
-
+    def click_on_elem(self,elem):
+        self._driver.execute_script("arguments[0].click();", elem)
 

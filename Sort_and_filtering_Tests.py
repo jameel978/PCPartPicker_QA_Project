@@ -47,5 +47,4 @@ class PCPARTPICKERTests(unittest.TestCase):
         old_result = self.website_page.get_number_of_product_in_the_page()
         self.website_page.apply_section_filter("AM5")
         new_result = self.website_page.get_number_of_product_in_the_page()
-        print((old_result, new_result))
         self.assertEqual(old_result, new_result)

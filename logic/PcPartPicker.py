@@ -170,23 +170,11 @@ class Pc_Part_Picker(Driver_instance):
     def apply_section_filter(self,section_filter):
         #self.expand_all_sections()
         cur_elem = self.FILTER_SECTION + section_filter + "']//preceding-sibling::input"
-        cur_elem = "//div[@id='filterdiv_k']//li[7]"
-        print(cur_elem)
-        logo = self.wait_and_get_element_by_xpath(cur_elem)
-        attrs = []
-        for attr in logo.get_property('attributes'):
-            attrs.append([attr['name'], attr['value']])
-        print(attrs)
-
         self.Find_and_click_on_element(cur_elem)
-        time.sleep(3)
 
     def expand_all_sections(self):
         all_expand_buttons = self.wait_and_get_elements_by_xpath(self.EXPAND_ALL_ELEMENTS)
         for elem in all_expand_buttons:
             if elem.is_displayed() and elem.is_enabled():
-                try:
-                    elem.click()
-                except:
-                    pass
+                self.click_on_elem(elem)
 
