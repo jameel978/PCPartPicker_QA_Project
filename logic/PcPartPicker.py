@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+from logic.helper_functions import *
 
 
 class Pc_Part_Picker(Driver_instance):
@@ -28,6 +29,7 @@ class Pc_Part_Picker(Driver_instance):
 
     # BUILDPCSECTION
     # https://pcpartpicker.com/list/
+    CHOOSE_PART = "//a[normalize-space()='"
     CHOOSE_CPU = "//a[normalize-space()='CPU']"
     CHOOSE_CPU_COOLER = "//a[normalize-space()='CPU']"
     CHOOSE_MOTHERBOARD = "//a[normalize-space()='Motherboard']"
@@ -41,6 +43,7 @@ class Pc_Part_Picker(Driver_instance):
 
     # PRODUCT_PAGE
     # https://pcpartpicker.com/products/
+    SECTION_PAGE = "//ul[@class='inside']//a[normalize-space()='"
     CPU_PAGE = "//ul[@class='inside']//a[normalize-space()='CPUs']"
     CPU_COOLER_PAGE = "//ul[@class='inside']//a[normalize-space()='CPU Coolers']"
     MOBO_PAGE = "//ul[@class='inside']//a[normalize-space()='Motherboards']"
@@ -83,10 +86,15 @@ class Pc_Part_Picker(Driver_instance):
     CATAGORY_CONTENT_NAMES = "//tbody[@id='category_content']//tr//td[@class='td__name']"
     CATAGORY_CONTENT_COUNT = "//h2[@class='pp-filter-count']"
     CATAGORY_SEARCH = "//input[@id='part_category_search']"
-    PRICE_BUTTON = "//p[normalize-space()='Price']"
+    PRICE_ELEMNT = ".//td[@class='td__price']"
     COPATIBILITY_BUTTON = "//input[@id='compatibility_enabled']"
-
-
+    FILTER_BY_BUTTON = "//p[normalize-space()='"
+    PRICE_SLIDER = "//div[@id='filter_slide_X']//div[@class='obj-filter-dualslide ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content']"
+    PRICE_SLIDER_MAX_RANGE = "//div[@class='obj-filter-slide-right ui-slider-horizontal-labelbox-label']"
+    PRICE_SLIDER_MIN_RANGE = "//div[@class='obj-filter-slide-left ui-slider-horizontal-labelbox-label']"
+    SLIDER_LEFT_HANDLE = "//div[@id='filter_slide_X']//span[1]"
+    SLIDER_RIGHT_HANDLE = ".//span[@tabindex='0'][2]"
+    LEFT_RIGHT_SLIDERS = "//div[@id='filter_slide_X']//div[@class='obj-filter-dualslide ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content']//span"
     #CPU SECTION
     CPU_COCKET = "//h3[normalize-space()='Socket']"
     FILTER_SECTION = "//label[normalize-space()='"
@@ -149,10 +157,11 @@ class Pc_Part_Picker(Driver_instance):
     def check_if_user_entred_wrong_credentials(self):
         return self.is_element_found(self.WRONG_CREDENTAILS, sec=3)
 
-    def go_to_CPU_section(self):
-        self.Find_and_click_on_element(self.CPU_PAGE)
+    def go_to_product_page(self,section):
+        Section = self.SECTION_PAGE + section + "']"
+        self.Find_and_click_on_element(Section)
 
-    def wrtie_in_the_search_box(self, txt):
+    def write_in_the_search_box(self, txt):
         self.Find_and_send_input_to_element(self.CATAGORY_SEARCH, txt)
         time.sleep(3)
 
@@ -170,7 +179,8 @@ class Pc_Part_Picker(Driver_instance):
     def apply_section_filter(self,section_filter):
         #self.expand_all_sections()
         cur_elem = self.FILTER_SECTION + section_filter + "']//preceding-sibling::input"
-        self.Find_and_click_on_element(cur_elem)
+        self.Find_and_click_on_element(cur_elem,click_using_javescript = True)
+        time.sleep(3)
 
     def expand_all_sections(self):
         all_expand_buttons = self.wait_and_get_elements_by_xpath(self.EXPAND_ALL_ELEMENTS)
@@ -178,3 +188,30 @@ class Pc_Part_Picker(Driver_instance):
             if elem.is_displayed() and elem.is_enabled():
                 self.click_on_elem(elem)
 
+
+    def filter_by(self,fltr,order):
+        Section = self.FILTER_BY_BUTTON + fltr + "']"
+        if order == "descending":
+            self.Find_and_click_on_element(Section)
+            self.Find_and_click_on_element(Section)
+        elif order == "increasing":
+            self.Find_and_click_on_element(Section)
+
+    def check_if_page_filtered_by_price(self,order):
+        prices = []
+        all_page_elements = self.wait_and_get_elements_by_xpath(self.CATAGORY_CONTENT)
+        for elem in all_page_elements:
+            #[1:-3] to remove # sign and add word
+            tmp_price = elem.find_element(By.XPATH,self.PRICE_ELEMNT).text[1:-3]
+            prices.append(float(tmp_price))
+        return check_if_list_is_in_order(prices,order)
+
+    def set_price_range_in_prodcut_page(self,start_price,end_price):
+        current_max_price = self.wait_and_get_element_by_xpath(self.PRICE_SLIDER_MAX_RANGE)
+        current_min_price = self.wait_and_get_element_by_xpath(self.PRICE_SLIDER_MIN_RANGE)
+        slider_elements = self.wait_and_get_elements_by_xpath(self.LEFT_RIGHT_SLIDERS)
+        start_element = slider_elements[0]
+        end_element = slider_elements[1]
+        self.drag_slider_elements(start_element,current_min_price,start_price)
+        #self.drag_slider_elements(end_element, current_max_price,end_price)
+        time.sleep(3)
