@@ -30,16 +30,11 @@ class Pc_Part_Picker(Driver_instance):
     # BUILDPCSECTION
     # https://pcpartpicker.com/list/
     CHOOSE_PART = "//a[normalize-space()='"
-    CHOOSE_CPU = "//a[normalize-space()='CPU']"
-    CHOOSE_CPU_COOLER = "//a[normalize-space()='CPU']"
-    CHOOSE_MOTHERBOARD = "//a[normalize-space()='Motherboard']"
-    CHOOSE_MEMORY = "//td[contains(@class,'td__component')]//a[normalize-space()='Memory']"
-    CHOOSE_STORAGE = "//td[contains(@class,'td__component')]//a[normalize-space()='Storage']"
-    CHOOSE_GPU = "//td[contains(@class,'td__component')]//a[normalize-space()='Video Card']"
-    CHOOSE_CASE = "//a[normalize-space()='Case']"
-    CHOOSE_PSU = "//a[normalize-space()='Power Supply']"
-    CHOOSE_OS = "//a[normalize-space()='Operating System']"
-    CHOOSE_MONITOR = "//a[normalize-space()='Monitor']"
+    COMPATIBILITY_WARNING = "//p[@class='partlist__compatibility--warning']"
+    PERMA_LINK = "//div[@class='actionBox-2023 actionBox__permalink']//input"
+    BUILD_PARTS = "//a[@class='actionBox__markupLink actionBox__markup--text tooltip']"
+    MARK_UP_TEXT = "//textarea[@id='markup_text']"
+
 
     # PRODUCT_PAGE
     # https://pcpartpicker.com/products/
@@ -54,6 +49,7 @@ class Pc_Part_Picker(Driver_instance):
     PSU_PAGE = "//ul[@class='inside']//a[normalize-space()='Power Supplies']"
     OS_PAGE = "//ul[@class='inside']//a[normalize-space()='Operating Systems']"
     MONITOR_PAGE = "//ul[@class='inside']//a[normalize-space()='Monitors']"
+
 
     NUMBER_OF_FOUND_PARTS = "//h2[contains(text(),'Compatible Product')]"
 
@@ -87,6 +83,7 @@ class Pc_Part_Picker(Driver_instance):
     CATAGORY_CONTENT_COUNT = "//h2[@class='pp-filter-count']"
     CATAGORY_SEARCH = "//input[@id='part_category_search']"
     PRICE_ELEMNT = ".//td[@class='td__price']"
+    ADD_PART = "//tr//button[@class='td__add button button--small pp_add_part'][normalize-space()='Add']"
     COPATIBILITY_BUTTON = "//input[@id='compatibility_enabled']"
     FILTER_BY_BUTTON = "//p[normalize-space()='"
     PRICE_SLIDER = "//div[@id='filter_slide_X']//div[@class='obj-filter-dualslide ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content']"
@@ -95,6 +92,7 @@ class Pc_Part_Picker(Driver_instance):
     SLIDER_LEFT_HANDLE = "//div[@id='filter_slide_X']//span[1]"
     SLIDER_RIGHT_HANDLE = ".//span[@tabindex='0'][2]"
     LEFT_RIGHT_SLIDERS = "//div[@id='filter_slide_X']//div[@class='obj-filter-dualslide ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content']//span"
+
     #CPU SECTION
     CPU_COCKET = "//h3[normalize-space()='Socket']"
     FILTER_SECTION = "//label[normalize-space()='"
@@ -196,6 +194,7 @@ class Pc_Part_Picker(Driver_instance):
             self.Find_and_click_on_element(Section)
         elif order == "increasing":
             self.Find_and_click_on_element(Section)
+        time.sleep(2)
 
     def check_if_page_filtered_by_price(self,order):
         prices = []
@@ -210,8 +209,54 @@ class Pc_Part_Picker(Driver_instance):
         current_max_price = self.wait_and_get_element_by_xpath(self.PRICE_SLIDER_MAX_RANGE)
         current_min_price = self.wait_and_get_element_by_xpath(self.PRICE_SLIDER_MIN_RANGE)
         slider_elements = self.wait_and_get_elements_by_xpath(self.LEFT_RIGHT_SLIDERS)
+       # print(self.get_element_by_xpath(self.PRICE_SLIDER).size['width'])
         start_element = slider_elements[0]
         end_element = slider_elements[1]
         self.drag_slider_elements(start_element,current_min_price,start_price)
-        #self.drag_slider_elements(end_element, current_max_price,end_price)
+        self.drag_slider_elements(end_element, current_max_price,end_price)
         time.sleep(3)
+
+    def check_if_prices_are_in_range(self,price_start,price_end):
+        all_page_elements = self.wait_and_get_elements_by_xpath(self.CATAGORY_CONTENT)
+        for elem in all_page_elements:
+            #[1:-3] to remove # sign and add word
+            tmp_price = elem.find_element(By.XPATH,self.PRICE_ELEMNT).text[1:-3]
+            if (float(tmp_price) < price_start) and (float(tmp_price) > price_end):
+                return False
+        return True
+
+    def turn_off_compatible_filter(self):
+        elem = self.wait_and_get_element_by_xpath(self.COPATIBILITY_BUTTON)
+        self.click_on_elem(elem)
+
+    def choose_part_page_in_building_section(self,section):
+        Section = self.CHOOSE_PART + section + "']"
+        self.wait_and_get_element_by_xpath(Section,sec=5).click()
+
+    def choose_random_part(self,section):
+        Section = self.CHOOSE_PART + section + "']"
+        self.wait_and_get_element_by_xpath(Section,sec=5).click()
+        all_page_elements = self.wait_and_get_elements_by_xpath(self.ADD_PART)
+        button = random.choice(all_page_elements)
+        self.click_on_elem(button)
+
+    def choose_first_part(self):
+        all_page_elements = self.wait_and_get_elements_by_xpath(self.ADD_PART)
+        button = all_page_elements[0]
+        self.click_on_elem(button)
+
+    def check_for_compatibility(self):
+        try:
+            self.wait_and_get_element_by_xpath(self.COMPATIBILITY_WARNING,sec=5)
+            return False
+        except:
+            return True
+
+    def get_build_perma_link(self):
+        perma_link = self.wait_and_get_element_by_xpath(self.PERMA_LINK)
+        return perma_link.get_attribute("value")
+
+    def gell_build_parts(self):
+        self.wait_and_get_element_by_xpath(self.BUILD_PARTS).click()
+        return self.wait_and_get_element_by_xpath(self.MARK_UP_TEXT).text
+

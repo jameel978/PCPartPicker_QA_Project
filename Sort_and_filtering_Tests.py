@@ -76,11 +76,11 @@ class PCPARTPICKERTests(unittest.TestCase):
         result = self.website_page.check_if_page_filtered_by_price("increasing")
         self.assertTrue(result)
 
-
     def test_price_range_slider_in_prodcut_page(self):
         self.website_page.go_to_product_page("CPUs")
-        self.website_page.set_price_range_in_prodcut_page(100,300)
-        #result = self.website_page.check_if_page_filtered_by_price("increasing")
-        result = True
-        time.sleep(100)
-        self.assertTrue(result)
+        self.website_page.set_price_range_in_prodcut_page(100,350)
+        self.website_page.filter_by("Price", order="increasing")
+        increasing_result = self.website_page.check_if_prices_are_in_range(100,350)
+        self.website_page.filter_by("Price", order="decreasing")
+        decreasing_result = self.website_page.check_if_prices_are_in_range(100,350)
+        self.assertTrue(increasing_result and decreasing_result)
