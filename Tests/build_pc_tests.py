@@ -1,7 +1,7 @@
 import unittest
 from Logic.Building_Pc_Base_page import *
 from Infra.Browser_wrapper import *
-from Logic.helper_functions import *
+from Logic.Utils import *
 import concurrent.futures
 
 
@@ -39,6 +39,7 @@ class building_pc_tests(unittest.TestCase):
         current_page.choose_first_part()
         result = current_page.check_for_compatibility()
         self.assertFalse(result)
+        
     def test_build_random_pc(self,cap = None):
         current_page = building_pc_page(cap)
         current_page.choose_random_part("Choose A CPU")

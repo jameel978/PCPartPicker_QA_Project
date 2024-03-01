@@ -1,5 +1,5 @@
 from selenium import webdriver
-from Logic.helper_functions import *
+from Logic.Utils import *
 
 class BrowserWrapper:
     def __init__(self,config_location = None):

@@ -1,12 +1,7 @@
-from selenium.webdriver.common.by import By
 from Infra.Driver_instance import Driverinstance
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import time
-from Logic.helper_functions import *
+from Logic.Utils import *
 
 
 class building_pc_page(Driverinstance):
