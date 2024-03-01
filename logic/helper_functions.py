@@ -1,5 +1,6 @@
 import random
 import string
+import json
 
 def generate_random_username():
     letters = ''.join(random.choices(string.ascii_letters, k=6))
@@ -23,3 +24,18 @@ def check_if_list_is_in_order(lst,order):
         return True
     else:
         return False
+
+
+def read_json(location):
+    with open(location) as f:
+        data = json.load(f)
+    return data
+def get_test_variables(location):
+    return read_json(location)["test_variables"][0]
+
+def get_browser_config(location):
+    return read_json(location)["browser_config"]
+
+
+def get_test_config(location):
+    return read_json(location)["test_config"][0]

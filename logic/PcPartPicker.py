@@ -98,8 +98,9 @@ class Pc_Part_Picker(Driver_instance):
     FILTER_SECTION = "//label[normalize-space()='"
     EXPAND_ALL_ELEMENTS = "//ul//span[@class='arrow__small arrow__small--down']//*[name()='svg']"
 
-    def __init__(self, driver):
-        super().__init__(driver)
+    def __init__(self, browser,test_type,options,driver = None):
+        super().__init__(browser,test_type,options,driver)
+
 
     def account_login_flow(self, username, password):
         self.Find_and_click_on_element(self.LOGIN_BUTTON)
@@ -235,9 +236,10 @@ class Pc_Part_Picker(Driver_instance):
 
     def choose_random_part(self,section):
         Section = self.CHOOSE_PART + section + "']"
-        self.wait_and_get_element_by_xpath(Section,sec=5).click()
+        self.click_on_elem(self.wait_and_get_element_by_xpath(Section,sec=5))
         all_page_elements = self.wait_and_get_elements_by_xpath(self.ADD_PART)
         button = random.choice(all_page_elements)
+        time.sleep(1)
         self.click_on_elem(button)
 
     def choose_first_part(self):

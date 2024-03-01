@@ -1,0 +1,49 @@
+{
+  "test_variables" : [
+    {
+      "correct_username" : "Beyond_dev",
+      "correct_email" : "cipevic841@gexige.com",
+      "incorrect_username" : "Beyond_deva",
+      "invalid_username" : "Braskdhask sad1@2!!",
+      "correct_password" :  "A123456a",
+      "incorrect_password" : "Beyond_deva"
+    }
+  ],
+  "test_config" : [
+    {
+      "test_type": "serial",
+      "HUB" : "http://192.168.112.221:4444/wd/hub",
+      "URL" : "https://pcpartpicker.com/"
+    }
+  ],
+  "browser_config": [
+    {
+      "chrome": [
+        {
+          "argument": [
+            "--disable-blink-features=AutomationControlled",
+            "--start-maximized"
+          ]
+        }
+      ]
+    },{
+      "edge": [
+        {
+          "argument": [
+            "--disable-blink-features=AutomationControlled",
+            "--start-maximized"
+          ]
+        }
+      ]
+    },{
+      "firefox": [
+        {
+          "argument": [
+            "--disable-blink-features=AutomationControlled",
+            "--start-maximized"
+          ]
+        }
+      ]
+    }
+    ]
+  }

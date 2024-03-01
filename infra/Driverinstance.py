@@ -8,8 +8,36 @@ import time
 
 
 class Driver_instance:
-    def __init__(self, driver):
+    def __init__(self,browser,test_type,options,driver = None):
         self._driver = driver
+        self.start_driver(browser,test_type,options)
+    def change_driver(self,driver):
+        self._driver = driver
+
+    def start_driver(self,browser,test_type,options):
+        if browser == "chrome":
+            if test_type == "parallel":
+                pass
+            else:
+                driver = webdriver.Chrome(options=options)
+        elif browser == "edge":
+            if test_type == "parallel":
+                pass
+            else:
+                driver = webdriver.Edge(options=options)
+        elif browser == "firefox":
+            if test_type == "parallel":
+                pass
+            else:
+                driver = webdriver.Firefox(options=options)
+        else:
+            return
+        self._driver = driver
+    # self.start_driver(HUB,cap,url)
+
+    # def start_driver(self,HUB,cap,url):
+    #    self.driver = webdriver.Remote(command_executor=HUB,options=cap)
+    #    self.driver.get(url)
 
     def get_page_title(self):
         return self._driver.title
@@ -45,10 +73,12 @@ class Driver_instance:
             return False
 
     def click_on_elem(self, elem):
+        #self._driver.execute_script("arguments[0].scrollIntoView();", elem)
         self._driver.execute_script("arguments[0].click();", elem)
 
     def drag_slider_elements(self, element, cur_price_elem, price):
         # ActionChains(self._driver).move_to_element(element).perform()
+        self._driver.execute_script("arguments[0].scrollIntoView();", element)
         cur_price = float(cur_price_elem.text[1:])
         #range of the slider
         left = 0

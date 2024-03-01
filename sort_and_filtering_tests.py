@@ -5,31 +5,24 @@ from logic.helper_functions import *
 import time
 
 
-class PCPARTPICKERTests(unittest.TestCase):
-
+class sort_and_search_tests(unittest.TestCase):
     # cipevic841@gexige.com
     # Beyond_dev
     # A123456a
-
     def setUp(self):
         # Create Chromeoptions instance
         options = webdriver.ChromeOptions()
         # Adding argument to disable the AutomationControlled flag
         options.add_argument("--disable-blink-features=AutomationControlled")
         options.add_argument("--start-maximized")
-        # Exclude the collection of enable-automation switches
-        options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        # Turn-off userAutomationExtension
-        options.add_experimental_option("useAutomationExtension", False)
-        # Setting the driver path and requesting a page
         self.driver = webdriver.Chrome(options=options)
         # Changing the property of the navigator value for webdriver to undefined
-        self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-        # self.driver = webdriver.Chrome()
+        #self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+        #self.driver = webdriver.Chrome()
         self.driver.get("https://pcpartpicker.com/products/")
-        self.website_page = Pc_Part_Picker(self.driver)
+        self.website_page = Pc_Part_Picker("","","",self.driver)
 
-    def searching_in_cpu_section(self):
+    def test_searching_in_cpu_section(self):
         self.website_page.go_to_product_page("CPUs")
         self.website_page.write_in_the_search_box("7800X3D")
         result = self.website_page.get_title_of_the_first_product_in_the_page()
@@ -76,7 +69,7 @@ class PCPARTPICKERTests(unittest.TestCase):
         result = self.website_page.check_if_page_filtered_by_price("increasing")
         self.assertTrue(result)
 
-    def test_price_range_slider_in_prodcut_page(self):
+    def test_price_range_slider_in_product_page(self):
         self.website_page.go_to_product_page("CPUs")
         self.website_page.set_price_range_in_prodcut_page(100,350)
         self.website_page.filter_by("Price", order="increasing")
@@ -84,3 +77,5 @@ class PCPARTPICKERTests(unittest.TestCase):
         self.website_page.filter_by("Price", order="decreasing")
         decreasing_result = self.website_page.check_if_prices_are_in_range(100,350)
         self.assertTrue(increasing_result and decreasing_result)
+
+

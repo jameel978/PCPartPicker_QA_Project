@@ -5,8 +5,7 @@ from logic.helper_functions import *
 import time
 
 
-class PCPARTPICKERTests(unittest.TestCase):
-
+class building_pc_tests(unittest.TestCase):
     def setUp(self):
         # Create Chromeoptions instance
         options = webdriver.ChromeOptions()
@@ -23,7 +22,7 @@ class PCPARTPICKERTests(unittest.TestCase):
         self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         # self.driver = webdriver.Chrome()
         self.driver.get("https://pcpartpicker.com/list/")
-        self.website_page = Pc_Part_Picker(self.driver)
+        self.website_page = Pc_Part_Picker(",","","",driver = self.driver)
 
     def test_compatibility_function(self):
         self.website_page.choose_part_page_in_building_section("Choose A CPU")
