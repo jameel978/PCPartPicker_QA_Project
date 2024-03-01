@@ -1,15 +1,15 @@
 from selenium.webdriver.common.by import By
-from infra.Driverinstance import Driver_instance
+from Infra.Driver_instance import Driverinstance
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
-from logic.helper_functions import *
+from Logic.helper_functions import *
 
 
-class Pc_Part_Picker(Driver_instance):
+class Pc_Part_Picker(Driverinstance):
     # HOMEPAGE
     # https://pcpartpicker.com/
     LOGIN_BUTTON = "//ul[@class='nav__account nav__account--desktop list-unstyled']/li[@class='nav__account--login']"
@@ -98,8 +98,8 @@ class Pc_Part_Picker(Driver_instance):
     FILTER_SECTION = "//label[normalize-space()='"
     EXPAND_ALL_ELEMENTS = "//ul//span[@class='arrow__small arrow__small--down']//*[name()='svg']"
 
-    def __init__(self, browser,test_type,options,driver = None):
-        super().__init__(browser,test_type,options,driver)
+    def __init__(self, driver):
+        super().__init__(driver)
 
 
     def account_login_flow(self, username, password):

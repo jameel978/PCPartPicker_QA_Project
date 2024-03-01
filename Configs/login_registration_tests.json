@@ -6,14 +6,15 @@
       "incorrect_username" : "Beyond_deva",
       "invalid_username" : "Braskdhask sad1@2!!",
       "correct_password" :  "A123456a",
-      "incorrect_password" : "Beyond_deva"
+      "incorrect_password" : "Beyond_deva",
+      "invalid_password" : "A A"
+
     }
   ],
   "test_config" : [
     {
-      "test_type": "serial",
-      "HUB" : "http://192.168.112.221:4444/wd/hub",
-      "URL" : "https://pcpartpicker.com/"
+      "test_type": "parallel",
+      "HUB" : "http://localhost:4444/wd/hub"
     }
   ],
   "browser_config": [
@@ -23,7 +24,10 @@
           "argument": [
             "--disable-blink-features=AutomationControlled",
             "--start-maximized"
-          ]
+          ],
+          "capabilities": {
+            "platformName" : "Windows 11"
+          }
         }
       ]
     },{
@@ -32,16 +36,10 @@
           "argument": [
             "--disable-blink-features=AutomationControlled",
             "--start-maximized"
-          ]
-        }
-      ]
-    },{
-      "firefox": [
-        {
-          "argument": [
-            "--disable-blink-features=AutomationControlled",
-            "--start-maximized"
-          ]
+          ],
+          "capabilities": {
+            "platformName" : "Windows 11"
+          }
         }
       ]
     }

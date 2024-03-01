@@ -6,9 +6,9 @@
     ],
     "test_config" : [
       {
-        "test_type": "parallel",
+        "test_type": "serial",
         "HUB" : "http://localhost:4444/wd/hub",
-        "URL" : "https://pcpartpicker.com/"
+        "URL" : "https://pcpartpicker.com/products/"
       }
     ],
     "browser_config": [
@@ -36,6 +36,19 @@
             }
           }
         ]
+      },{
+        "firefox": [
+          {
+            "argument": [
+              "--disable-blink-features=AutomationControlled",
+              "--start-maximized"
+            ],
+            "capabilities": {
+              "platformName" : "Windows 11"
+            }
+          }
+        ]
       }
       ]
     }
+  

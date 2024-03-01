@@ -1,5 +1,4 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -7,38 +6,20 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 
 
-class Driver_instance:
-    def __init__(self,browser,test_type,options,driver = None):
-        self._driver = driver
-        self.start_driver(browser,test_type,options)
-    def change_driver(self,driver):
-        self._driver = driver
-
-    def start_driver(self,browser,test_type,options):
-        if browser == "chrome":
-            if test_type == "parallel":
-                pass
-            else:
-                driver = webdriver.Chrome(options=options)
-        elif browser == "edge":
-            if test_type == "parallel":
-                pass
-            else:
-                driver = webdriver.Edge(options=options)
-        elif browser == "firefox":
-            if test_type == "parallel":
-                pass
-            else:
-                driver = webdriver.Firefox(options=options)
+class Driverinstance:
+    def __init__(self,cap = None):
+        if cap == None:
+            # default cap
+            # Create Chromeoptions instance
+            options = webdriver.ChromeOptions()
+            # Adding argument to disable the AutomationControlled flag
+            options.add_argument("--disable-blink-features=AutomationControlled")
+            options.add_argument("--start-maximized")
+            driver = webdriver.Chrome(options=options)
         else:
-            return
+            driver = cap[0](**cap[1])
         self._driver = driver
-    # self.start_driver(HUB,cap,url)
-
-    # def start_driver(self,HUB,cap,url):
-    #    self.driver = webdriver.Remote(command_executor=HUB,options=cap)
-    #    self.driver.get(url)
-
+        
     def get_page_title(self):
         return self._driver.title
 
@@ -105,7 +86,6 @@ class Driver_instance:
                     right = mid - 1
                 else:
                     left = mid + 1
-
         return
 
 
@@ -117,12 +97,8 @@ class Driver_instance:
         time.sleep(0.05)
 
 
-
-
-
     def drag_element_to_left(self, elem, speed=1):
         ActionChains(self._driver).click_and_hold(elem).move_by_offset(-0.75*speed, 0).release().perform()
-
 
     def drag_element_to_right(self, elem, speed=1):
         ActionChains(self._driver).click_and_hold(elem).move_by_offset(1*speed, 0).release().perform()

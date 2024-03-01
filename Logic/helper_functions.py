@@ -1,6 +1,8 @@
 import random
 import string
 import json
+import inspect
+import types
 
 def generate_random_username():
     letters = ''.join(random.choices(string.ascii_letters, k=6))
@@ -39,3 +41,8 @@ def get_browser_config(location):
 
 def get_test_config(location):
     return read_json(location)["test_config"][0]
+
+def get_all_tests(my_class):
+    methodList = [v for n, v in inspect.getmembers(my_class, inspect.ismethod) if isinstance(v, types.MethodType)]
+    test_list = [test for test in methodList if "test_" in test.__name__ and "runner" not in test.__name__]
+    return test_list
