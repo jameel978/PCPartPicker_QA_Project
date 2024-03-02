@@ -25,8 +25,8 @@ class building_pc_tests(unittest.TestCase):
                 except:
                     print(current_test[0].__name__, "Failed on browser", current_test[1][0])
 
-    def init_tests(self, input):
-        input[0](input[1])
+    def init_tests(self, input_):
+        input_[0](input_[1])
 
     def test_compatibility_function(self,cap = None):
         current_page = building_pc_page(cap)
@@ -39,7 +39,18 @@ class building_pc_tests(unittest.TestCase):
         current_page.choose_first_part()
         result = current_page.check_for_compatibility()
         self.assertFalse(result)
-        
+
+    def test_compatibility_manually_function(self,cap = None):
+        current_page = building_pc_page(cap)
+        current_page.choose_part_page_in_building_section("Choose A CPU")
+        current_page.write_in_the_search_box("AM5")
+        current_page.choose_random_part()
+        current_page.choose_part_page_in_building_section("Choose A Motherboard")
+        current_page.write_in_the_search_box("AM5")
+        current_page.choose_first_part()
+        result = current_page.check_for_compatibility()
+        self.assertFalse(result)
+
     def test_build_random_pc(self,cap = None):
         current_page = building_pc_page(cap)
         current_page.choose_random_part("Choose A CPU")

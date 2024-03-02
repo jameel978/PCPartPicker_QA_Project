@@ -31,9 +31,11 @@ class product_page_tests(unittest.TestCase):
 
     def test_searching_in_cpu_section(self,cap= None):
         website_page = Product_page(cap)
+        time.sleep(100)
         website_page.go_to_product_page("CPUs")
         website_page.write_in_the_search_box("7800X3D")
         result = website_page.get_title_of_the_first_product_in_the_page()
+
         self.assertIn("7800X3D", result)
 
     def test_empty_search(self,cap= None):

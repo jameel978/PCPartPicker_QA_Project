@@ -13,43 +13,36 @@ class BrowserWrapper:
             self.test_HUB = test_config["HUB"]
             
         for browser in browser_configs:
-            browser_name = list(browser.keys())[0]
-            browser_arguments = browser[browser_name][0]["argument"]
-            capabilities_dict = None
-            if self.test_type == 'parallel':
-                capabilities_dict = browser[browser_name][0]["capabilities"]
-            tmp_cap = self.get_browser_cap(browser_name,browser_arguments,capabilities_dict)
+            tmp_cap = self.get_browser_cap(browser)
             caps_list.append(tmp_cap)
         self.caps_list = caps_list
 
-    def get_browser_cap(self,browser,arguments,capabilities_dict=None):
+    def get_browser_cap(self,browser):
         options = None
         browser_webdriver = None
-        if browser =="chrome":
+        if browser == "chrome":
             options = webdriver.ChromeOptions()
-            options = self.add_browser_argument(options,arguments)
-            browser_webdriver =  webdriver.Chrome
+            browser_webdriver = webdriver.Chrome
         elif browser == "edge":
             options = webdriver.EdgeOptions()
-            options = self.add_browser_argument(options,arguments)
             browser_webdriver = webdriver.Edge
         elif browser == "firefox":
             options = webdriver.FirefoxOptions()
-            options = self.add_browser_argument(options,arguments)
             browser_webdriver = webdriver.Firefox
+        # Adding argument to disable the AutomationControlled flag
+        options.add_argument("--disable-blink-features=AutomationControlled")
+        # Exclude the collection of enable-automation switches
+        if browser != "firefox":
+            options.add_experimental_option("excludeSwitches", ["enable-automation"])
+            # Turn-off userAutomationExtension
+            options.add_experimental_option("useAutomationExtension", False)
+        options.add_argument("--start-maximized")
         browser_webdriver_args = {'options' : options}
-        if capabilities_dict:
-            #parallel run
-            for key in capabilities_dict.keys():
-                options.capabilities[key] = capabilities_dict[key]
+        if self.test_type == "parallel":
+            options.capabilities["platformName"] = "Windows 11"
             browser_webdriver = webdriver.Remote
-            browser_webdriver_args = {'options' : options, 'command_executor' : self.test_HUB}
+            browser_webdriver_args = {'options' : options, 'command_executor': self.test_HUB}
         return browser_webdriver, browser_webdriver_args
-
-    def add_browser_argument(self,options, arguments):
-        for arg in arguments:
-            options.add_argument(arg)
-        return options
 
 
     def get_caps(self):
