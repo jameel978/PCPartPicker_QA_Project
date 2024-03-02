@@ -12,30 +12,7 @@
       }
     ],
     "browser_config": [
-      {
-        "chrome": [
-          {
-            "argument": [
-              "--disable-blink-features=AutomationControlled",
-              "--start-maximized"
-            ],
-            "capabilities": {
-              "platformName" : "Windows 11"
-            }
-          }
-        ]
-      },{
-        "edge": [
-          {
-            "argument": [
-              "--disable-blink-features=AutomationControlled",
-              "--start-maximized"
-            ],
-            "capabilities": {
-              "platformName" : "Windows 11"
-            }
-          }
-        ]
-      }
+      "chrome",
+      "edge"
       ]
     }
