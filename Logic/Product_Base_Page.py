@@ -36,6 +36,9 @@ class Product_page(Driverinstance):
     def __init__(self, driver):
         super().__init__(driver)
         self.go_to_url(self.PAGE_URL)
+        time.sleep(3)
+        self.refresh_driver()
+        time.sleep(3)
 
     def go_to_product_page(self,section):
         Section = self.SECTION_PAGE + section + "']"

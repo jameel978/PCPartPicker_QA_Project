@@ -41,12 +41,19 @@ class building_pc_page(Driverinstance):
     PERMA_LINK = "//div[@class='actionBox-2023 actionBox__permalink']//input"
     BUILD_PARTS = "//a[@class='actionBox__markupLink actionBox__markup--text tooltip']"
     MARK_UP_TEXT = "//textarea[@id='markup_text']"
+    PAGE_URL = "https://pcpartpicker.com/list/"
 
-    PAGE_URL = "https://pcpartpicker.com/"
+    SOCKET_TYPE = "//td[@class='td__spec td__spec--1']//h6[@class='specLabel']"
+    MOBO_FORMFACTOR = "//h6[@class='specLabel'][normalize-space()='Form Factor']"
+    RAM_TYPE = "//h6[@class='specLabel'][normalize-space()='Speed']"
+    GPU_LENGTH = "//h6[@class='specLabel'][normalize-space()='Length']"
 
     def __init__(self, driver):
         super().__init__(driver)
         self.go_to_url(self.PAGE_URL)
+        time.sleep(3)
+        self.refresh_driver()
+        time.sleep(3)
 
 
 
@@ -104,6 +111,9 @@ class building_pc_page(Driverinstance):
         button = random.choice(all_page_elements)
         time.sleep(1)
         self.click_on_elem(button)
+        if section == "Choose A Motherboard":
+            return button.find_element(By.XPATH,self.SOCKET_TYPE).text
+
 
     def choose_first_part(self):
         all_page_elements = self.wait_and_get_elements_by_xpath(self.ADD_PART)

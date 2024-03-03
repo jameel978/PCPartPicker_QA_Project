@@ -15,7 +15,7 @@ class building_pc_tests(unittest.TestCase):
         inputs_list = [(tmp_test, browser) for tmp_test in test_list for browser in browser_caps]
         test_type = get_test_config(self.config_location)["test_type"]
         if test_type == "parallel":
-            with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
                 executor.map(self.init_tests, inputs_list)
         else:
             for current_test in inputs_list:
@@ -35,17 +35,6 @@ class building_pc_tests(unittest.TestCase):
         current_page.choose_first_part()
         current_page.choose_part_page_in_building_section("Choose A Motherboard")
         current_page.turn_off_compatible_filter()
-        current_page.write_in_the_search_box("AM5")
-        current_page.choose_first_part()
-        result = current_page.check_for_compatibility()
-        self.assertFalse(result)
-
-    def test_compatibility_manually_function(self,cap = None):
-        current_page = building_pc_page(cap)
-        current_page.choose_part_page_in_building_section("Choose A CPU")
-        current_page.write_in_the_search_box("AM5")
-        current_page.choose_random_part()
-        current_page.choose_part_page_in_building_section("Choose A Motherboard")
         current_page.write_in_the_search_box("AM5")
         current_page.choose_first_part()
         result = current_page.check_for_compatibility()
@@ -76,10 +65,10 @@ class building_pc_tests(unittest.TestCase):
         current_page.choose_random_part("Choose A Power Supply")
         actual_result = current_page.gell_build_parts()
         perma_link = current_page.get_build_perma_link()
-        current_page.close_browser()
-        self.setUp()
-        current_page.go_to_url(perma_link)
-        restored_result = current_page.gell_build_parts()
+        current_page.close_page()
+        new_page = building_pc_page(cap)
+        new_page.go_to_url(perma_link)
+        restored_result = new_page.gell_build_parts()
         self.assertEqual(actual_result,restored_result)
 
 

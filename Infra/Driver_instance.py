@@ -31,6 +31,8 @@ class Driverinstance:
     def get_page_title(self):
         return self._driver.title
 
+    def refresh_driver(self):
+        self._driver.refresh()
     def close_page(self):
         self._driver.close()
 
