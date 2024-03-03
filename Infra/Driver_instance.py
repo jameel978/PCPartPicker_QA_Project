@@ -108,7 +108,7 @@ class Driverinstance:
 
 
     def drag_element_to_left(self, elem, speed=1):
-        ActionChains(self._driver).click_and_hold(elem).move_by_offset(-0.75*speed, 0).release().perform()
+        ActionChains(self._driver).click_and_hold(elem).move_by_offset(-0.74*speed, 0).release().perform()
 
     def drag_element_to_right(self, elem, speed=1):
         ActionChains(self._driver).click_and_hold(elem).move_by_offset(1*speed, 0).release().perform()

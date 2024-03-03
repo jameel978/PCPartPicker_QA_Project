@@ -31,11 +31,9 @@ class product_page_tests(unittest.TestCase):
 
     def test_searching_in_cpu_section(self,cap= None):
         website_page = Product_page(cap)
-        time.sleep(100)
         website_page.go_to_product_page("CPUs")
         website_page.write_in_the_search_box("7800X3D")
         result = website_page.get_title_of_the_first_product_in_the_page()
-
         self.assertIn("7800X3D", result)
 
     def test_empty_search(self,cap= None):
@@ -88,11 +86,11 @@ class product_page_tests(unittest.TestCase):
     def test_price_range_slider_in_product_page(self,cap= None):
         website_page = Product_page(cap)
         website_page.go_to_product_page("CPUs")
-        website_page.set_price_range_in_prodcut_page(100,350)
+        website_page.set_price_range_in_prodcut_page(100,332)
         website_page.filter_by("Price", order="increasing")
-        increasing_result = website_page.check_if_prices_are_in_range(100,350)
+        increasing_result = website_page.check_if_prices_are_in_range(100,332)
         website_page.filter_by("Price", order="decreasing")
-        decreasing_result = website_page.check_if_prices_are_in_range(100,350)
+        decreasing_result = website_page.check_if_prices_are_in_range(100,332)
         self.assertTrue(increasing_result and decreasing_result)
 
 
