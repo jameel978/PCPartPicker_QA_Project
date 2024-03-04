@@ -20,14 +20,14 @@ class product_page_tests(unittest.TestCase):
                 executor.map(self.init_tests, inputs_list)
         else:
             for current_test in inputs_list:
-                try:
-                    self.init_tests(current_test)
-                    print(current_test[0].__name__, "Passed on browser", current_test[1][0])
-                except:
-                    print(current_test[0].__name__, "Failed on browser", current_test[1][0])
+                self.init_tests(current_test)
 
-    def init_tests(self, input):
-        input[0](input[1])
+    def init_tests(self, input_):
+        try:
+            input_[0](input_[1])
+            print(input_[0].__name__, "Passed on browser", input_[1][0])
+        except:
+            print(input_[0].__name__, "Failed on browser", input_[1][0])
 
     def test_searching_in_cpu_section(self,cap= None):
         website_page = Product_page(cap)

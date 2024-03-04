@@ -42,9 +42,9 @@ class Login_Registration_Page(Driverinstance):
     def __init__(self, driver):
         super().__init__(driver)
         self.go_to_url(self.PAGE_URL)
-        time.sleep(3)
-        self.refresh_driver()
-        time.sleep(3)
+        #time.sleep(3)
+        #self.refresh_driver()
+        #time.sleep(3)
 
 
     def account_login_flow(self, username, password):

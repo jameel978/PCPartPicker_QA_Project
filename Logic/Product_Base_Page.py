@@ -36,9 +36,9 @@ class Product_page(Driverinstance):
     def __init__(self, driver):
         super().__init__(driver)
         self.go_to_url(self.PAGE_URL)
-        time.sleep(3)
-        self.refresh_driver()
-        time.sleep(3)
+        #time.sleep(3)
+        #self.refresh_driver()
+        #time.sleep(3)
 
     def go_to_product_page(self,section):
         Section = self.SECTION_PAGE + section + "']"
@@ -67,12 +67,14 @@ class Product_page(Driverinstance):
 
     def filter_by(self,fltr,order):
         Section = self.FILTER_BY_BUTTON + fltr + "']"
+        #print(Section)
         if order == "descending":
             self.Find_and_click_on_element(Section)
+            time.sleep(2)
             self.Find_and_click_on_element(Section)
         elif order == "increasing":
             self.Find_and_click_on_element(Section)
-        time.sleep(2)
+        time.sleep(3)
 
     def check_if_page_filtered_by_price(self,order):
         prices = []
