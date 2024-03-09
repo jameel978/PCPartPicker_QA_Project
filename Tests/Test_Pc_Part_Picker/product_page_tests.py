@@ -1,9 +1,9 @@
 import unittest
-from Logic.Product_Base_Page import *
+from Logic.Pc_Part_Picker.Product_Base_Page import *
 from Infra.Browser_wrapper import BrowserWrapper
 import concurrent.futures
 from Logic.Utils import *
-import time
+
 
 class product_page_tests(unittest.TestCase):
     def __init__(self, *args, **kwargs):

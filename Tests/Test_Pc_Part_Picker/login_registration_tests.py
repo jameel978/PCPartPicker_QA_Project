@@ -1,5 +1,5 @@
 import unittest
-from Logic.Login_Registration_Base_Page import *
+from Logic.Pc_Part_Picker.Login_Registration_Base_Page import *
 from Infra.Browser_wrapper import *
 from Logic.Utils import *
 import concurrent.futures
