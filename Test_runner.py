@@ -57,7 +57,6 @@ def get_unittest_classes(folder_path):
 
 if __name__ == "__main__":
 
-
     folder_path = "Tests/Test_Steam_API"
     test_classes = get_unittest_classes(folder_path)
     all_test_cases = prepair_all_tests(test_classes)

@@ -7,10 +7,11 @@ from Logic.Utils import *
 class app_details_api_tests(unittest.TestCase):
     def setUp(self) -> None:
         self.app_details_api = APP_Details_API()
+
     def test_get_app_details(self):
         app_details = self.app_details_api.get_app_details("1245620")
         result = app_details["success"]
-        self.assertTrue(result,"failed to get app review")
+        self.assertTrue(result,"failed to get app detail")
 
     def test_get_app_name(self):
         app_details = self.app_details_api.get_app_details("1245620")
