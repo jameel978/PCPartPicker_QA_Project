@@ -9,7 +9,6 @@ import unittest
 # Import your test modules
 from Tests.Test_Steam_API.Test_app_review_api import *
 
-
 def run_test(current_test):
     suite = unittest.TestSuite()
     suite.addTest(init_test(current_test))
@@ -56,7 +55,6 @@ def get_unittest_classes(folder_path):
 
 
 if __name__ == "__main__":
-
 
     folder_path = "Tests/Test_Steam_API"
     test_classes = get_unittest_classes(folder_path)

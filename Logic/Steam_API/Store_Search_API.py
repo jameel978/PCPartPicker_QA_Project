@@ -4,28 +4,20 @@ import os
 
 class Store_Search_API:
 
-    def __init__(self):
-        self.my_api = APIWrapper()
+    def __init__(self,my_api):
+        self.my_api = my_api
         cur_dir = os.path.dirname(os.path.abspath(__file__))
         self._config = read_json(os.path.join(cur_dir, "API_Configs", "Store_Search_API.json"))
         self.URL = self._config['url']
-        # self.default_params = curr_config['params']
-
-
-    def prepair_url_params(self, input_):
-        params_dict = {}
-        for key in input_.keys():
-            params = self._config[key]
-            params_dict[params] = input_[key]
-        return params_dict
 
     def get_search_result(self, search_term, **extra):
         url = f"{self.URL}?term={search_term}"
         if extra:
-            params_dict = self.prepair_url_params(extra)
-            url = add_query_Parameters_to_api_request(url, params_dict)
-        result = self.my_api.api_get_request(url)
-        return result.json()
+            result = self.my_api.api_get_request_with_param(url, extra,self._config)
+            return result.json()
+        else:
+            result = self.my_api.api_get_request(url)
+            return result.json()
 
     def get_names_of_found_serach_apps(self,search_result):
         result = search_result['items']
