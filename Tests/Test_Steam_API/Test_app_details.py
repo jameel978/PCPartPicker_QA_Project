@@ -6,7 +6,8 @@ from Logic.Utils import *
 
 class app_details_api_tests(unittest.TestCase):
     def setUp(self) -> None:
-        self.app_details_api = APP_Details_API()
+        self.api_wrapper = APIWrapper()
+        self.app_details_api = APP_Details_API(self.api_wrapper)
 
     def test_get_app_details(self):
         app_details = self.app_details_api.get_app_details("1245620")
