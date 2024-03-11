@@ -19,7 +19,6 @@ def run_test(current_test):
 
 
 def init_test(input_):
-    print(input_)
     return input_[0](input_[1])
 
 

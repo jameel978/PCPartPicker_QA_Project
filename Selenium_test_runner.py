@@ -84,7 +84,7 @@ if __name__ == "__main__":
                 test_pass += 1
             else:
                 print("Test Failed")
-                result.printErrors()
+                print(result)
                 test_fail += 1
         if test_fail == 0:
             print(f"All tests Passed,number of tests {test_pass}")
