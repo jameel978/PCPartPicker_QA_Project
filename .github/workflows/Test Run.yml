@@ -12,10 +12,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2  # Checkout the repository's code
+        uses: actions/checkout@v4  # Checkout the repository's code
 
       - name: Set up Python
-        uses: actions/setup-python@v2  # Set up Python environment
+        uses: actions/setup-python@v4  # Set up Python environment
 
       - name: Install dependencies
         run: |
