@@ -84,7 +84,9 @@ if __name__ == "__main__":
                 test_pass += 1
             else:
                 print("Test Failed")
-                print(result)
+                for test, error in result.errors:
+                    print(f"Error in test '{test.id()}'")
+                    print(error)
                 test_fail += 1
         if test_fail == 0:
             print(f"All tests Passed,number of tests {test_pass}")
