@@ -58,11 +58,9 @@ def get_unittest_classes(_folder_path):
 
 
 if __name__ == "__main__":
-
     folder_path = "Tests/Test_Steam_API"
     test_classes = get_unittest_classes(folder_path)
     all_test_cases = prepair_all_tests(test_classes)
-
     # read from config
     test_config = read_json("Configs/Test_runner.json")
     serial_run = test_config["run_serial"]
@@ -93,6 +91,5 @@ if __name__ == "__main__":
             print(f"All tests Passed,number of tests {test_pass}")
         else:
             print(f"Some tests Failed,number of failed tests {test_fail}, number of passed tests {test_pass}")
-
     print("")
     print(f"Total Run time: {elapsed_time:.2f} seconds")
