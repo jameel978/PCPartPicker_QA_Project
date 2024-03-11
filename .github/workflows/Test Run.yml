@@ -1,4 +1,4 @@
-name: Python Script Execution
+name: Test_Runner Execution
 
 on:
   push:
