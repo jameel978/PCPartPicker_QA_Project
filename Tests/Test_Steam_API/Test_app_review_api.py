@@ -1,6 +1,6 @@
 import unittest
 from Infra.Api_wrapper import APIWrapper
-from Logic.Steam_API.App_Reviews_API import *
+from Logic.Steam_API.APP_Reviews_API import *
 from Logic.Utils import *
 
 
