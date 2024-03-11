@@ -7,32 +7,18 @@ import time
 
 
 class Driverinstance:
-    def __init__(self,cap = None):
-        if cap == None:
-            # default cap
-            # Create Chromeoptions instance
-            options = webdriver.ChromeOptions()
-            # Adding argument to disable the AutomationControlled flag
-            # Adding argument to disable the AutomationControlled flag
-            options.add_argument("--disable-blink-features=AutomationControlled")
-            # Exclude the collection of enable-automation switches
-            options.add_experimental_option("excludeSwitches", ["enable-automation"])
-            # Turn-off userAutomationExtension
-            options.add_experimental_option("useAutomationExtension", False)
-            options.add_argument("--start-maximized")
-            driver = webdriver.Chrome(options=options)
-        else:
-            driver = cap[0](**cap[1])
+    def __init__(self,cap):
+        driver = cap[0](**cap[1])
         # Changing the property of the navigator value for webdriver to undefined
         driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         self._driver = driver
-
 
     def get_page_title(self):
         return self._driver.title
 
     def refresh_driver(self):
         self._driver.refresh()
+
     def close_page(self):
         self._driver.close()
 

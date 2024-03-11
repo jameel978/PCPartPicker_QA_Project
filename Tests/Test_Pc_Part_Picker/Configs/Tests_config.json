@@ -1,5 +1,5 @@
 {
-  "test_variables" : [
+  "login_registration_tests_vars" :
     {
       "correct_username" : "Beyond_dev",
       "correct_email" : "cipevic841@gexige.com",
@@ -8,18 +8,16 @@
       "correct_password" :  "A123456a",
       "incorrect_password" : "Beyond_deva",
       "invalid_password" : "A A"
-
     }
-  ],
-  "test_config" : [
+  ,
+  "test_config" :
     {
-      "test_type": "parallel",
+      "test_type": "serial",
       "HUB" : "http://localhost:4444/wd/hub"
     }
-  ],
+  ,
   "browser_config": [
     "chrome",
-    "edge",
-    "firefox"
+    "edge"
     ]
   }

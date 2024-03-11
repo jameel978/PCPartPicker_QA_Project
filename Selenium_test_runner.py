@@ -5,23 +5,21 @@ import os
 import importlib.util
 import inspect
 import unittest
+from Infra.Browser_wrapper import *
 
 # Import your test modules
 from Tests.Test_Steam_API.Test_app_review_api import *
 
 
-def run_test(current_test):
+def run_test(_current_test):
     suite = unittest.TestSuite()
-    suite.addTest(init_test(current_test))
+    suite.addTest(init_test(_current_test))
     # Run the test suite
     _result = unittest.TextTestRunner(stream=StringIO(), verbosity=2).run(suite)
     return _result
 
-
 def init_test(input_):
-    print(input_)
-    return input_[0](input_[1])
-
+    return input_[0](input_[1],cap = input_[2])
 
 def run_tests_in_parallel(test_cases):
     with ThreadPoolExecutor(max_workers=len(test_cases)) as executor:
@@ -36,16 +34,13 @@ def run_tests_in_serrial(_test_classes):
         _results.append(_result)
     return _results
 
-
 def get_unittest_classes(_folder_path):
     unittest_classes = []
-
     # Iterate through files in the folder
     for file_name in os.listdir(_folder_path):
         if file_name.endswith('.py'):
             module_name = os.path.splitext(file_name)[0]
             module_path = os.path.join(_folder_path, file_name)
-
             # Load the module
             spec = importlib.util.spec_from_file_location(module_name, module_path)
             module = importlib.util.module_from_spec(spec)
@@ -59,22 +54,25 @@ def get_unittest_classes(_folder_path):
 
 
 if __name__ == "__main__":
-    folder_path = "Tests/Test_Steam_API"
+    folder_path = "Tests/Test_Pc_Part_Picker"
     test_classes = get_unittest_classes(folder_path)
     all_test_cases = prepair_all_tests(test_classes)
     # read from config
-    test_config = read_json("Configs/Test_runner.json")
-    serial_run = test_config["run_serial"]
+    cur_dir = os.path.dirname(os.path.abspath(__file__))
+    test_config = read_json(os.path.join(cur_dir, "Tests/Test_Pc_Part_Picker/Configs/Tests_config.json"))
+    browser_caps = BrowserWrapper(test_config).get_caps()
+    test_cases_with_caps = [(i,j,(browser)) for i,j in all_test_cases for browser in browser_caps]
+    test_type = test_config['test_config']["test_type"]
     start_time = time.time()
     results = None
-    if serial_run:
+    if test_type == 'serial':
         print("running test in serial")
         print("")
-        results = run_tests_in_serrial(all_test_cases)
-    else:
+        results = run_tests_in_serrial(test_cases_with_caps)
+    elif test_type == 'parallel':
         print("running test in parallel")
         print("")
-        results = run_tests_in_parallel(all_test_cases)
+        results = run_tests_in_parallel(test_cases_with_caps)
     elapsed_time = time.time() - start_time
     if results == None:
         raise Exception("Tests Failed to Run")
