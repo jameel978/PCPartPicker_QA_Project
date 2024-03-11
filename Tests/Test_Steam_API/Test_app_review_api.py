@@ -6,7 +6,8 @@ from Logic.Utils import *
 
 class app_review_api_tests(unittest.TestCase):
     def setUp(self) -> None:
-        self.app_review_api = App_Reviews_Api()
+        self.api_wrapper = APIWrapper()
+        self.app_review_api = App_Reviews_Api(self.api_wrapper)
     def test_get_app_review(self):
         app_review = self.app_review_api.get_app_review("1245620")
         result = app_review["success"]

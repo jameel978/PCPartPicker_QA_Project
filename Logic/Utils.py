@@ -66,9 +66,6 @@ def read_json(location):
         data = json.load(f)
     return data
 
-def add_query_Parameters_to_api_request(url, params):
-    query_params = ''.join([f"&{key}={value}" for key, value in params.items()])
-    return url + query_params
 
 def extract_idf_from_link(link):
     id = link.split("/")[5]
