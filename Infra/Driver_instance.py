@@ -12,6 +12,10 @@ class Driverinstance:
         # Changing the property of the navigator value for webdriver to undefined
         driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         self._driver = driver
+        # Get the page source (HTML)
+        html = self._driver.page_source
+        # Print the HTML
+        print(html)
 
     def get_page_title(self):
         return self._driver.title
