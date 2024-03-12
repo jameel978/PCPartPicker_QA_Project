@@ -24,25 +24,22 @@ class BrowserWrapper:
         elif browser == "edge":
             options = webdriver.EdgeOptions()
             browser_webdriver = webdriver.Edge
-        elif browser == "firefox":
-            options = webdriver.FirefoxOptions()
-            browser_webdriver = webdriver.Firefox
         # Adding argument to disable the AutomationControlled flag
         options.add_argument("--disable-blink-features=AutomationControlled")
         # Exclude the collection of enable-automation switches
-        if browser != "firefox":
-            options.add_argument("--no-sandbox")
-            options.add_argument("--disable-dev-shm-usage")
-            options.add_argument("--headless")
-            options.add_experimental_option("excludeSwitches", ["enable-automation"])
-            # Turn-off userAutomationExtension
-            options.add_experimental_option("useAutomationExtension", False)
-        options.add_argument("--start-maximized")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--headless")
+        options.add_argument("window-size=1920,1080")
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        # Turn-off userAutomationExtension
+        options.add_experimental_option("useAutomationExtension", False)
+        #options.add_argument("--start-maximized")
         browser_webdriver_args = {'options' : options}
-        if self.test_type == "parallel":
-            #options.capabilities["platformName"] = "Windows 11"
-            browser_webdriver = webdriver.Remote
-            browser_webdriver_args = {'options' : options, 'command_executor': self.test_HUB}
+        #if self.test_type == "parallel":
+        #    #options.capabilities["platformName"] = "Windows 11"
+        #    browser_webdriver = webdriver.Remote
+        #    browser_webdriver_args = {'options' : options, 'command_executor': self.test_HUB}
         return browser_webdriver, browser_webdriver_args
 
     def get_default_browser_cap(self):
@@ -52,6 +49,7 @@ class BrowserWrapper:
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--headless")
+        options.add_argument("window-size=1920,1080")
         # Exclude the collection of enable-automation switches
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
         # Turn-off userAutomationExtension
