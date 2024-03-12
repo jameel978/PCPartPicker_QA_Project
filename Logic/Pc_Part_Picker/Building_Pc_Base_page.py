@@ -52,9 +52,12 @@ class building_pc_page(Driverinstance):
         super().__init__(driver)
         self.go_to_url(self.PAGE_URL)
         time.sleep(3)
-        self.refresh_driver()
         time.sleep(3)
-        self.print_html_page()
+        if self.get_page_title() == "Just a moment...":
+            raise Exception("Test Failed, Captcha Detected")
+        #self.refresh_driver()
+        #time.sleep(3)
+        #self.print_html_page()
 
 
 

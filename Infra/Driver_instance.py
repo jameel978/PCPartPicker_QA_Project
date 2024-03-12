@@ -19,6 +19,7 @@ class Driverinstance:
         html = self._driver.page_source
         # Print the HTML
         print(html)
+        self._driver.save_screenshot('test.png')
     def get_page_title(self):
         return self._driver.title
 
