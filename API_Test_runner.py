@@ -15,8 +15,17 @@ def run_test(current_test):
     suite.addTest(init_test(current_test))
     # Run the test suite
     _result = unittest.TextTestRunner(stream=StringIO(), verbosity=2).run(suite)
-    return _result
 
+    # Print the names of tests that passed
+
+    if _result.wasSuccessful():
+            print(f"'{current_test[1]}' passed!")
+    else:
+        # Print the error details
+        for test, error in _result.errors:
+            print(f"Error in test '{test.id()}':")
+            print(error)
+    return _result
 
 def init_test(input_):
     return input_[0](input_[1])
@@ -44,7 +53,6 @@ def get_unittest_classes(_folder_path):
         if file_name.endswith('.py'):
             module_name = os.path.splitext(file_name)[0]
             module_path = os.path.join(_folder_path, file_name)
-
             # Load the module
             spec = importlib.util.spec_from_file_location(module_name, module_path)
             module = importlib.util.module_from_spec(spec)
@@ -57,12 +65,13 @@ def get_unittest_classes(_folder_path):
     return unittest_classes
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     folder_path = "Tests/Test_Steam_API"
     test_classes = get_unittest_classes(folder_path)
     all_test_cases = prepair_all_tests(test_classes)
     # read from config
-    test_config = read_json("Configs/Test_runner.json")
+    cur_dir = os.path.dirname(os.path.abspath(__file__))
+    test_config = read_json(os.path.join(cur_dir, "Tests/Test_Steam_API/Config/Test_runner.json"))
     serial_run = test_config["run_serial"]
     start_time = time.time()
     results = None
@@ -84,8 +93,6 @@ if __name__ == "__main__":
             if result.wasSuccessful():
                 test_pass += 1
             else:
-                print("Test Failed")
-                result.printErrors()
                 test_fail += 1
         if test_fail == 0:
             print(f"All tests Passed,number of tests {test_pass}")

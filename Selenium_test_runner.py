@@ -16,6 +16,13 @@ def run_test(_current_test):
     suite.addTest(init_test(_current_test))
     # Run the test suite
     _result = unittest.TextTestRunner(stream=StringIO(), verbosity=2).run(suite)
+    if _result.wasSuccessful():
+            print(f"'{_current_test[1]}' passed!")
+    else:
+        # Print the error details
+        for test, error in _result.errors:
+            print(f"Error in test '{test.id()}':")
+            print(error)
     return _result
 
 def init_test(input_):
@@ -53,7 +60,7 @@ def get_unittest_classes(_folder_path):
     return unittest_classes
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     folder_path = "Tests/Test_Pc_Part_Picker"
     test_classes = get_unittest_classes(folder_path)
     all_test_cases = prepair_all_tests(test_classes)
@@ -83,10 +90,6 @@ if __name__ == "__main__":
             if result.wasSuccessful():
                 test_pass += 1
             else:
-                print("Test Failed")
-                for test, error in result.errors:
-                    print(f"Error in test '{test.id()}'")
-                    print(error)
                 test_fail += 1
         if test_fail == 0:
             print(f"All tests Passed,number of tests {test_pass}")
