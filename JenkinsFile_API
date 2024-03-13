@@ -9,9 +9,8 @@ pipeline {
     stages {
         stage('Setup Virual Python Environment') {
             steps {
-                echo '$path'
                 echo 'Setting up Python environment...'
-                bat "$PYTHON_PATH -m venv venv"
+                bat "C:\\Program Files\\Python312\\python.exe -m venv venv"
                 bat 'venv\\Scripts\\python.exe -m pip install --upgrade pip'
                 bat 'venv\\Scripts\\pip.exe install -r requirements.txt'
             }
