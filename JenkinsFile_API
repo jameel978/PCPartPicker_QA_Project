@@ -1,5 +1,20 @@
 pipeline {
-    agent any   
+    agent any
+
+    environment {
+        PYTHON_HOME = "%USERPROFILE%\AppData\Local\Microsoft\WindowsApps" //python path
+    }
+
+    stages {
+        stage('Set up Python environment') {
+            steps {
+                bat "${PYTHON_HOME}\\python.exe --version" // Print Python version for debugging purposes
+                bat "${PYTHON_HOME}\\Scripts\\pip.exe install -r requirements.txt" // Install Python dependencies if needed
+                
+            }
+        }
+    }
+
     stages {
         stage('Run API TESTS') {
             steps {
