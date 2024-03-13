@@ -6,10 +6,10 @@ pipeline {
             steps {
                 script {               
                     // Install dependencies
-                    bat '${Windows_path}\\pip.exe install -r requirements.txt'
+                    bat '${env.Windows_path}\\pip.exe install -r requirements.txt'
                     
                     // Execute Python script
-                    bat '${Windows_path}\\python.exe API_Test_runner.py'
+                    bat '${env.Windows_path}\\python.exe API_Test_runner.py'
                 }
             }
         }
