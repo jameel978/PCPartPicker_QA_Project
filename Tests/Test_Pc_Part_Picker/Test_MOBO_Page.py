@@ -21,7 +21,6 @@ class product_page_tests(unittest.TestCase):
         self.assertEqual(old_result, new_result)
 
     def test_product_that_doesnt_exist(self):
-        self.website_page.go_to_product_page("CPUs")
         self.website_page.write_in_the_search_box("asdasdjsadasd")
         result = self.website_page.get_number_of_product_in_the_page()
         self.assertEqual(result, "0 Compatible Products")
