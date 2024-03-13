@@ -1,10 +1,10 @@
 pipeline {
     agent any   
     stages {
-        stage('Run Python script') {
+        stage('Run API TESTS') {
             steps {
                 // Execute Python script
-                sh 'python API_Test_runner.py'
+                bat "python API_Test_runner.py"
             }
         }
     }
