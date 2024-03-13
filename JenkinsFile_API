@@ -9,7 +9,7 @@ pipeline {
         stage('Set up Python environment') {
             steps {
                 bat "${PYTHON_HOME}\\python.exe --version" // Print Python version for debugging purposes
-                bat "${PYTHON_HOME}\\Scripts\\pip.exe install -r requirements.txt" // Install Python dependencies if needed
+                bat "${PYTHON_HOME}\\pip.exe install -r requirements.txt" // Install Python dependencies if needed
                 
             }
         }
