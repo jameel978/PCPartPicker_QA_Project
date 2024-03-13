@@ -1,21 +1,50 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Run API Tests') {
-            steps {
-                script {    
-                    echo "${Windows_path}"           
-                    // Install dependencies
+    environment {
+        PIP_PATH = 'C:\\Program Files\\Python32\\Scripts\\pip.exe'
+        PYTHON_PATH = 'C:\\Program Files\\Python312\\python.exe'
+    }
 
-                    bat 'python --version'
-                    
-                    bat "${Windows_path}\\pip.exe install -r requirements.txt"
-                    
-                    // Execute Python script
-                    bat "${Windows_path}\\python.exe API_Test_runner.py"
-                }
+    stages {
+        stage('Setup Virual Python Environment') {
+            steps {
+                echo '$path'
+                echo 'Setting up Python environment...'
+                bat "$PYTHON_PATH -m venv venv"
+                bat 'venv\\Scripts\\python.exe -m pip install --upgrade pip'
+                bat 'venv\\Scripts\\pip.exe install -r requirements.txt'
             }
+        }
+
+        stage('Installing requirements') {
+            steps {
+                echo 'Installing requirements..'
+                bat 'venv\\Scripts\\pip.exe install -r requirements.txt'
+            }
+        }
+
+        stage('Runing API Tests') {
+            steps {
+                echo 'Testing..'
+                bat "venv\\Scripts\\python.exe API_Test_runner.py"
+            }
+        }
+
+
+        stage('Runing API Tests') {
+            steps {
+                echo 'Testing..'
+                bat "venv\\Scripts\\python.exe Selenium_test_runner.py"
+            }
+        }
+
+    }
+
+    post {
+        always {
+            echo 'Cleaning up...'
+            bat "rd /s /q venv"
         }
     }
 }
