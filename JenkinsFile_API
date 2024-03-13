@@ -1,10 +1,5 @@
 pipeline {
-    agent any
-    
-    triggers {
-        githubPush(branchFilter: 'main')  // Trigger on push to main branch
-    }
-    
+    agent any   
     stages {
         stage('Run Python script') {
             steps {
