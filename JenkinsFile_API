@@ -7,10 +7,10 @@ pipeline {
                 script {    
                     echo "${Windows_path}"           
                     // Install dependencies
-                    bat '${env.Windows_path}\\pip.exe install -r requirements.txt'
+                    bat "${Windows_path}"'\\pip.exe install -r requirements.txt'
                     
                     // Execute Python script
-                    bat '${env.Windows_path}\\python.exe API_Test_runner.py'
+                    bat "${Windows_path}"'\\python.exe API_Test_runner.py'
                 }
             }
         }
