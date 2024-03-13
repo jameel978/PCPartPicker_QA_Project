@@ -1,3 +1,4 @@
+import time
 import unittest
 from Logic.Pc_Part_Picker.Login_Registration_Base_Page import *
 from Infra.Browser_wrapper import *

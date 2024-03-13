@@ -39,16 +39,14 @@ class Login_Registration_Page(Driverinstance):
 
     PAGE_URL = "https://pcpartpicker.com/"
 
+    CHAPTCHA_ID = "//*[@id='rc-imageselect']"
+
     def __init__(self, driver):
         super().__init__(driver)
         self.go_to_url(self.PAGE_URL)
         time.sleep(3)
         if self.get_page_title() == "Just a moment...":
             raise Exception("Test Failed, Captcha Detected")
-        #self.refresh_driver()
-        #time.sleep(3)
-        #self.print_html_page()
-
 
 
     def account_login_flow(self, username, password):
@@ -56,6 +54,12 @@ class Login_Registration_Page(Driverinstance):
         self.Find_and_send_input_to_element(self.USER_INPUT, username)
         self.Find_and_send_input_to_element(self.PASSWORD_INPUT, password)
         self.Find_and_click_on_element(self.SUBMIT_BUTTON)
+        try:
+            self.wait_and_get_element_by_xpath(self.CHAPTCHA_ID)
+            pass
+        except:
+            raise Exception("Login Failed Captcha Detected")
+
 
     def register_account_flow(self, username, password, email, email_repeat=True, password_repeat=True, TOS=True,
                               UCOC=True):
@@ -74,6 +78,10 @@ class Login_Registration_Page(Driverinstance):
         if UCOC:
             self.Find_and_click_on_element(self.ACCEPT_UCOC_CHECKBOX)
         self.Find_and_click_on_element(self.COMPLETE_REGISTRATION)
+        try:
+            self.wait_and_get_element_by_xpath(self.CHAPTCHA_ID)
+        except:
+            raise Exception("Login Failed Captcha Detected")
 
     def check_for_registration_error(self):
         return self.is_element_found(self.GENERAL_TEXT_ERROR, sec=3)
