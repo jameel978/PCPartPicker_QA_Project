@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        PYTHON_HOME = "%USERPROFILE%\AppData\Local\Microsoft\WindowsApps" //python path
+        PYTHON_HOME = "%USERPROFILE%\\AppData\\Local\\Microsoft\\WindowsApps" //python path
     }
 
     stages {
