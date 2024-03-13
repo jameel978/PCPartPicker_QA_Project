@@ -4,15 +4,12 @@ pipeline {
     stages {
         stage('Run API Tests') {
             steps {
-                script {
-                    // Checkout code
-                    checkout scm
-                    
+                script {               
                     // Install dependencies
-                    bat 'pip.exe install -r requirements.txt'
+                    bat '${Windows_path}\\pip.exe install -r requirements.txt'
                     
                     // Execute Python script
-                    bat 'python.exe API_Test_runner.py'
+                    bat '${Windows_path}\\python.exe API_Test_runner.py'
                 }
             }
         }
