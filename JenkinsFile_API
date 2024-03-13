@@ -8,9 +8,6 @@ pipeline {
                     // Checkout code
                     checkout scm
                     
-                    // Set up Python
-                    tool 'Python 3.10'
-                    
                     // Install dependencies
                     bat 'pip install -r requirements.txt'
                     
