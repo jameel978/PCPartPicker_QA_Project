@@ -7,33 +7,32 @@ pipeline {
     }
 
     stages {
-        stage('Setup Virual Python Environment') {
+        stage('Setup Virtual Python Environment') {
             steps {
                 echo 'Setting up Python environment...'
-                bat "C:\\Program Files\\Python312\\python.exe -m venv venv"
+                bat "\"${PYTHON_PATH}\" -m venv venv"
                 bat 'venv\\Scripts\\python.exe -m pip install --upgrade pip'
                 bat 'venv\\Scripts\\pip.exe install -r requirements.txt'
             }
         }
 
-        stage('Installing requirements') {
+        stage('Installing Requirements') {
             steps {
-                echo 'Installing requirements..'
+                echo 'Installing requirements...'
                 bat 'venv\\Scripts\\pip.exe install -r requirements.txt'
             }
         }
 
-        stage('Runing API Tests') {
+        stage('Running API Tests') {
             steps {
-                echo 'Testing..'
+                echo 'Testing...'
                 bat "venv\\Scripts\\python.exe API_Test_runner.py"
             }
         }
 
-
-        stage('Runing Selenium Tests') {
+        stage('Running Selenium Tests') {
             steps {
-                echo 'Testing..'
+                echo 'Testing...'
                 bat "venv\\Scripts\\python.exe Selenium_test_runner.py"
             }
         }
