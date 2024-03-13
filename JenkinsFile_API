@@ -32,7 +32,7 @@ pipeline {
         }
 
 
-        stage('Runing API Tests') {
+        stage('Runing Selenium Tests') {
             steps {
                 echo 'Testing..'
                 bat "venv\\Scripts\\python.exe Selenium_test_runner.py"
