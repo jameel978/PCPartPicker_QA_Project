@@ -3,12 +3,6 @@ pipeline {
     stages {
         stage('Run Python script') {
             steps {
-                // Set up Python
-                sh 'pyenv global 3.10.0'  // Assuming pyenv is set up to manage Python versions
-                
-                // Install dependencies
-                sh 'pip install -r requirements.txt'
-                
                 // Execute Python script
                 sh 'python API_Test_runner.py'
             }
