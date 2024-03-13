@@ -9,10 +9,10 @@ pipeline {
                     checkout scm
                     
                     // Install dependencies
-                    bat 'pip install -r requirements.txt'
+                    bat 'pip.exe install -r requirements.txt'
                     
                     // Execute Python script
-                    bat 'python API_Test_runner.py'
+                    bat 'python.exe API_Test_runner.py'
                 }
             }
         }
