@@ -7,6 +7,9 @@ pipeline {
                 script {    
                     echo "${Windows_path}"           
                     // Install dependencies
+
+                    bat 'python --version'
+                    
                     bat "${Windows_path}\\pip.exe install -r requirements.txt"
                     
                     // Execute Python script
