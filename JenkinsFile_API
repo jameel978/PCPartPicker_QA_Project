@@ -1,32 +1,23 @@
 pipeline {
     agent any
 
-    environment {
-        PYTHON_HOME = "%USERPROFILE%\\AppData\\Local\\Microsoft\\WindowsApps" //python path
-    }
-
     stages {
-        stage('Set up Python environment') {
+        stage('Run API Tests') {
             steps {
-                bat "${PYTHON_HOME}\\python.exe --version" // Print Python version for debugging purposes
-                bat "${PYTHON_HOME}\\pip.exe install -r requirements.txt" // Install Python dependencies if needed
-                
+                script {
+                    // Checkout code
+                    checkout scm
+                    
+                    // Set up Python
+                    tool 'Python 3.10'
+                    
+                    // Install dependencies
+                    bat 'pip install -r requirements.txt'
+                    
+                    // Execute Python script
+                    bat 'python API_Test_runner.py'
+                }
             }
-        }
-    }
-
-    stages {
-        stage('Run API TESTS') {
-            steps {
-                // Execute Python script
-                bat "python API_Test_runner.py"
-            }
-        }
-    }
-    
-    post {
-        always {
-            cleanWs()
         }
     }
 }
