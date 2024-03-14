@@ -30,6 +30,14 @@ pipeline {
             }
         }
 
+    stages {
+        stage('Setup selenium server') {
+            steps {
+                echo 'Setting up Python environment...'
+                bat "java -jar selenium-server.jar node --port 5555 --selenium-manager true"
+            }
+        }
+
         stage('Running Selenium Tests') {
             steps {
                 echo 'Testing...'
