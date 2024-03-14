@@ -54,6 +54,7 @@ class building_pc_page(Driverinstance):
         time.sleep(3)
         time.sleep(3)
         if self.get_page_title() == "Just a moment...":
+            self.quit()
             raise Exception("Test Failed, Captcha Detected")
         #self.refresh_driver()
         #time.sleep(3)

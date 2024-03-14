@@ -46,6 +46,7 @@ class Login_Registration_Page(Driverinstance):
         self.go_to_url(self.PAGE_URL)
         time.sleep(3)
         if self.get_page_title() == "Just a moment...":
+            self.quit()
             raise Exception("Test Failed, Captcha Detected")
 
 
@@ -58,6 +59,7 @@ class Login_Registration_Page(Driverinstance):
             self.wait_and_get_element_by_xpath(self.CHAPTCHA_ID)
             pass
         except:
+            self.quit()
             raise Exception("Login Failed Captcha Detected")
 
 
