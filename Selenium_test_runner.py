@@ -17,13 +17,14 @@ def run_test(_current_test):
     # Run the test suite
     _result = unittest.TextTestRunner(stream=StringIO(), verbosity=2).run(suite)
     if _result.wasSuccessful():
-            print(f"'{_current_test[1]}' passed!")
+            print(f"'{_current_test[1]}' passed! on {_current_test[2][2]}")
     else:
         # Print the error details
         for test, error in _result.errors:
+            print(f"'{_current_test[1]}' Failed! on {_current_test[2][2]}")
             print(f"Error in test '{test.id()}':")
             print(error)
-    return _result
+    return _result,_current_test
 
 def init_test(input_):
     return input_[0](input_[1],cap = input_[2])

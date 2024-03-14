@@ -42,7 +42,7 @@ class BrowserWrapper:
             options.capabilities["platformName"] = "Windows 11"
             browser_webdriver = webdriver.Remote
             browser_webdriver_args = {'options' : options, 'command_executor': self.test_HUB}
-        return browser_webdriver, browser_webdriver_args
+        return browser_webdriver, browser_webdriver_args, browser
 
     def get_default_browser_cap(self):
         options = webdriver.ChromeOptions()
