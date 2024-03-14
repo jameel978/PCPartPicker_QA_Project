@@ -26,5 +26,13 @@ jobs:
       - uses: browser-actions/setup-chrome@latest
       - run: chrome --version
 
+      - name: Start Selenium Server HUB
+        run: nohup java -jar selenium-server.jar hub & sleep 10
+        shell: bash
+
+      - name: Start Selenium Server nodes
+        run: nohup java -jar selenium-server.jar node --port 5555 --selenium-manager true & sleep 10
+        shell: bash
+
       - name: Execute Python script
         run: python Selenium_test_runner.py
