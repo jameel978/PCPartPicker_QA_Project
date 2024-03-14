@@ -85,3 +85,6 @@ class login_registration_tests(unittest.TestCase):
         self.current_page.register_account_flow(generate_random_username(),self.variables['correct_password'],self.rand_email,UCOC=False)
         result = self.current_page.check_for_registration_error()
         self.assertTrue(result)
+
+    def tearDown(self):
+        self.current_page.quit()

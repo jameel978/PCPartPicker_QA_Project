@@ -30,3 +30,6 @@ class product_page_tests(unittest.TestCase):
         self.website_page.write_in_the_search_box("  ")
         new_result = self.website_page.get_number_of_product_in_the_page()
         self.assertEqual(old_result, new_result)
+
+    def tearDown(self):
+        self.website_page.quit()

@@ -13,7 +13,6 @@ class Driverinstance:
         driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         self._driver = driver
 
-
     def print_html_page(self):
         # Get the page source (HTML)
         html = self._driver.page_source
@@ -107,6 +106,9 @@ class Driverinstance:
         ActionChains(self._driver).click_and_hold(elem).move_by_offset(1*speed, 0).release().perform()
     def close_browser(self):
         self._driver.close()
+
+    def quit(self):
+        self._driver.quit()
 
     def go_to_url(self,url):
         self._driver.get(url)

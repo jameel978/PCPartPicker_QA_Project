@@ -23,4 +23,5 @@ class building_pc_tests(unittest.TestCase):
         result = self.current_page.check_for_compatibility()
         self.assertFalse(result)
 
-
+    def tearDown(self):
+        self.current_page.quit()

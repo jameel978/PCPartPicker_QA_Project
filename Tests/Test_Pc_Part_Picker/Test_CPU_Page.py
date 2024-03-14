@@ -50,3 +50,6 @@ class product_page_tests(unittest.TestCase):
         self.website_page.filter_by("Price", order="decreasing")
         decreasing_result = self.website_page.check_if_prices_are_in_range(100, 332)
         self.assertTrue(increasing_result and decreasing_result)
+
+    def tearDown(self):
+        self.website_page.quit()

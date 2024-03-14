@@ -36,4 +36,5 @@ class building_pc_tests(unittest.TestCase):
         self.assertEqual(actual_result,restored_result)
 
 
-
+    def tearDown(self):
+        self.current_page.quit()
