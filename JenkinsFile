@@ -30,10 +30,13 @@ pipeline {
             }
         }
 
+
         stage('Setup Selenium Server') {
             steps {
                 echo 'Setting up Selenium server...'
-                bat "java -jar selenium-server.jar node --port 5555 --selenium-manager true"
+                timeout(time: 10, unit: 'SECONDS') {
+                    bat "java -jar selenium-server.jar node --port 5555 --selenium-manager true"
+                }
             }
         }
 
