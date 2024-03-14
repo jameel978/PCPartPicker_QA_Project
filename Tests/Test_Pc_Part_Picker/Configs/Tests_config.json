@@ -12,11 +12,12 @@
   ,
   "test_config" :
     {
-      "test_type": "serial",
-      "HUB" : "http://localhost:4444/wd/hub"
+      "test_type": "parallel",
+      "HUB" : "http://jenkins.mydomain:4444/wd/hub"
     }
   ,
   "browser_config": [
-    "chrome"
+    "chrome",
+    "edge"
     ]
   }

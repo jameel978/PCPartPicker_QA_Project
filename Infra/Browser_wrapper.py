@@ -36,10 +36,10 @@ class BrowserWrapper:
         options.add_experimental_option("useAutomationExtension", False)
         #options.add_argument("--start-maximized")
         browser_webdriver_args = {'options' : options}
-        #if self.test_type == "parallel":
+        if self.test_type == "parallel":
         #    #options.capabilities["platformName"] = "Windows 11"
-        #    browser_webdriver = webdriver.Remote
-        #    browser_webdriver_args = {'options' : options, 'command_executor': self.test_HUB}
+            browser_webdriver = webdriver.Remote
+            browser_webdriver_args = {'options' : options, 'command_executor': self.test_HUB}
         return browser_webdriver, browser_webdriver_args
 
     def get_default_browser_cap(self):
