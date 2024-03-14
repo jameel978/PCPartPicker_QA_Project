@@ -30,12 +30,10 @@ def run_test(current_test):
 def init_test(input_):
     return input_[0](input_[1])
 
-
 def run_tests_in_parallel(test_cases):
     with ThreadPoolExecutor(max_workers=len(test_cases)) as executor:
         _results = list(executor.map(run_test, test_cases))
     return _results
-
 
 def run_tests_in_serrial(_test_classes):
     _results = []
@@ -43,7 +41,6 @@ def run_tests_in_serrial(_test_classes):
         _result = run_test(test)
         _results.append(_result)
     return _results
-
 
 def get_unittest_classes(_folder_path):
     unittest_classes = []
