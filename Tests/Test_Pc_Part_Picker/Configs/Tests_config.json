@@ -13,7 +13,7 @@
   "test_config" :
     {
       "test_type": "parallel",
-      "HUB" : "http://jenkins.mydomain:4444/wd/hub"
+      "HUB" : "http://localhost:4444/wd/hub"
     }
   ,
   "browser_config": [
