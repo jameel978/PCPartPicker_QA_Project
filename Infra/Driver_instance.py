@@ -59,36 +59,6 @@ class Driverinstance:
         #self._driver.execute_script("arguments[0].scrollIntoView();", elem)
         self._driver.execute_script("arguments[0].click();", elem)
 
-    def drag_slider_elements(self, element, cur_price_elem, price):
-        # ActionChains(self._driver).move_to_element(element).perform()
-        self._driver.execute_script("arguments[0].scrollIntoView();", element)
-        cur_price = float(cur_price_elem.text[1:])
-        #range of the slider
-        left = 0
-        right = 199
-        if cur_price < price:
-            cur_location = left
-            while left <= right:
-                mid = (left + right) // 2
-                self.drag_element_to_location(element,mid,cur_location)
-                cur_location = mid
-                cur_price = float(cur_price_elem.text[1:])
-                if cur_price < price:
-                    left = mid + 1
-                else:
-                    right = mid - 1
-        else:
-            cur_location = right
-            while left <= right:
-                mid = (left + right) // 2
-                self.drag_element_to_location(element,mid,cur_location)
-                cur_location = mid
-                cur_price = float(cur_price_elem.text[1:])
-                if cur_price > price:
-                    right = mid - 1
-                else:
-                    left = mid + 1
-        return
 
 
     def drag_element_to_location(self, element, wanted_location, cur_location):
