@@ -34,5 +34,5 @@ jobs:
         run: nohup java -jar selenium-server.jar node --port 5555 --selenium-manager true & sleep 10
         shell: bash
 
-      - name: Execute Python script
+      - name: Running Selenium Tests
         run: python Selenium_test_runner.py

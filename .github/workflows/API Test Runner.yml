@@ -23,5 +23,5 @@ jobs:
         run: |
           pip install -r requirements.txt  # Install dependencies if needed
 
-      - name: Execute Python script
+      - name: Running API Tests
         run: python API_Test_runner.py
