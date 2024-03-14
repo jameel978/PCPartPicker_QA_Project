@@ -24,7 +24,7 @@ def run_test(_current_test):
             print(f"'{_current_test[1]}' Failed! on {_current_test[2][2]}")
             print(f"Error in test '{test.id()}':")
             print(error)
-    return _result,_current_test
+    return _result
 
 def init_test(input_):
     return input_[0](input_[1],cap = input_[2])
