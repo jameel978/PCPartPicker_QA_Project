@@ -17,6 +17,7 @@
     }
   ,
   "browser_config": [
-    "chrome"
+    "chrome",
+    "edge"
     ]
   }
