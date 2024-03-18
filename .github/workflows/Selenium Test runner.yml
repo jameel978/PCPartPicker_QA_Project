@@ -3,6 +3,7 @@ name: Selenium Test Runner
 on: workflow_dispatch
 jobs:
   run_python_script:
+    environment: Ubuntu
     name: Selenium Test Runner
     runs-on: ubuntu-latest  # Use the latest version of Ubuntu
 
