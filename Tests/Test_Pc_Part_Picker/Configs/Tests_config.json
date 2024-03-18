@@ -12,7 +12,7 @@
   ,
   "test_config" :
     {
-      "test_type": "serial",
+      "test_type": "parallel",
       "HUB" : "http://localhost:4444/wd/hub"
     }
   ,
