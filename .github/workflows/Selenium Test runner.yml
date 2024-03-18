@@ -1,9 +1,9 @@
-name: Test_Runner Execution
+name: Selenium Test Runner
 
 on: workflow_dispatch
 jobs:
   run_python_script:
-    name: Run Python script
+    name: Selenium Test Runner
     runs-on: ubuntu-latest  # Use the latest version of Ubuntu
 
     steps:

@@ -1,10 +1,10 @@
-name: Test_Runner Execution
+name: API Test runner
 
 on: workflow_dispatch
 
 jobs:
   run_python_script:
-    name: Run Python script
+    name: API Test runner
     runs-on: ubuntu-latest  # Use the latest version of Ubuntu
 
     steps:
