@@ -1,10 +1,6 @@
 name: Test_Runner Execution
 
-on:
-  push:
-    branches:
-      - main
-
+on: workflow_dispatch
 jobs:
   run_python_script:
     name: Run Python script
@@ -40,7 +36,8 @@ jobs:
           JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
           JIRA_URL: ${{ secrets.JIRA_URL }}
           PROJECT_KEY: ${{ secrets.PROJECT_KEY }}
-        run: python Infra/Github_json.py Infra/tokens.json JIRA_EMAIL=$JIRA_EMAIL JIRA_TOKEN=$JIRA_TOKEN JIRA_URL=$JIRA_URL PROJECT_KEY=$PROJECT_KEY
+
+        run: python Infra/Env_Variable_wrapper.py
 
       - name: Running Selenium Tests
         run: python Selenium_test_runner.py

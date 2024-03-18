@@ -1,9 +1,6 @@
 name: Test_Runner Execution
 
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
 
 jobs:
   run_python_script:
