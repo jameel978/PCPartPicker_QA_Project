@@ -1,11 +1,9 @@
 from concurrent.futures import ThreadPoolExecutor
 from io import StringIO
 import time
-import os
 import importlib.util
-import inspect
-import unittest
 from Infra.Browser_wrapper import *
+from Infra.Jira_wrapper import *
 
 # Import your test modules
 from Tests.Test_Steam_API.Test_app_review_api import *
@@ -17,20 +15,25 @@ def run_test(_current_test):
     # Run the test suite
     _result = unittest.TextTestRunner(stream=StringIO(), verbosity=2).run(suite)
     if _result.wasSuccessful():
-            print(f"'{_current_test[1]}' passed! on {_current_test[2][2]}")
+        print(f"'{_current_test[1]}' passed! on {_current_test[2][2]}")
     else:
         # Print the error details
         for test, error in _result.errors:
-            print(f"'{_current_test[1]}' Failed! on {_current_test[2][2]}")
+            test_name = f"'{_current_test[1]}' Failed! on {_current_test[2][2]}"
+            description = f"Error in test '{test.id()}':\r\n{error}"
+            jira_wrapper().create_issue(test_name, description)
+            print(test_name)
             print(f"Error in test '{test.id()}':")
             print(error)
     return _result
 
+
 def init_test(input_):
-    return input_[0](input_[1],cap = input_[2])
+    return input_[0](input_[1], cap=input_[2])
+
 
 def run_tests_in_parallel(test_cases):
-    #with ThreadPoolExecutor(max_workers=4) as executor:
+    # with ThreadPoolExecutor(max_workers=4) as executor:
     with ThreadPoolExecutor(max_workers=len(test_cases)) as executor:
         _results = list(executor.map(run_test, test_cases))
     return _results
@@ -42,6 +45,7 @@ def run_tests_in_serrial(_test_classes):
         _result = run_test(test)
         _results.append(_result)
     return _results
+
 
 def get_unittest_classes(_folder_path):
     unittest_classes = []
@@ -70,7 +74,7 @@ if __name__ == '__main__':
     cur_dir = os.path.dirname(os.path.abspath(__file__))
     test_config = read_json(os.path.join(cur_dir, "Tests/Test_Pc_Part_Picker/Configs/Tests_config.json"))
     browser_caps = BrowserWrapper(test_config).get_caps()
-    test_cases_with_caps = [(i,j,(browser)) for i,j in all_test_cases for browser in browser_caps]
+    test_cases_with_caps = [(i, j, (browser)) for i, j in all_test_cases for browser in browser_caps]
     test_type = test_config['test_config']["test_type"]
     start_time = time.time()
     results = None
